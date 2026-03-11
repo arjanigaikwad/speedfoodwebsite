@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SpeedFood</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#121212;
+color:white;
+}
+
+header{
+background:#c40000;
+text-align:center;
+padding:40px;
+}
+
+header img{
+width:180px;
+}
+
+.topmenu{
+background:#000;
+padding:15px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.topmenu a{
+color:white;
+margin:0 15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.topmenu a:hover{
+color:#ffc400;
+}
+
+.container{
+padding:40px 8%;
+}
+
+h2{
+border-bottom:2px solid red;
+padding-bottom:10px;
+margin-top:40px;
+}
+
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:#1e1e1e;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 0 10px rgba(0,0,0,0.5);
+}
+
+.card img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.card-body{
+padding:15px;
+text-align:center;
+}
+
+.price{
+color:#ffc400;
+font-weight:bold;
+margin:10px 0;
+}
+
+button{
+background:#e60000;
+border:none;
+padding:10px 15px;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff4040;
+}
+
+.cart{
+background:#000;
+padding:30px;
+margin-top:60px;
+border-radius:10px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.qty button{
+padding:5px 10px;
+margin:0 3px;
+}
+
+.total{
+font-size:22px;
+margin-top:15px;
+color:#00ffcc;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:5px;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header style="background: url('logobackground.jpg') no-repeat center center; background-size: cover; text-align: center; padding: 80px 20px; color: white; position: relative;">
+  <!-- Overlay -->
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 0;"></div>
+
+  <!-- Content -->
+  <img src="logo.png" alt="SpeedFood Logo" style="position: relative; z-index: 1; width: 180px; margin-bottom: 20px;">
+  <h1 style="position: relative; z-index: 1; margin: 5px 0;">SpeedFood</h1>
+  <p style="position: relative; z-index: 1; margin: 5px 0;">DOSTAVA 064 141 39 58</p>
+  <p style="position: relative; z-index: 1; margin: 5px 0;">Milana Rakića 131, Beograd</p>
+</header>
+
+<nav class="topmenu">
+
+<a href="#rostilj">Roštilj</a>
+<a href="#pizza">Pizza</a>
+<a href="#pasta">Paste</a>
+<a href="#tortilla">Tortilje</a>
+<a href="#risotto">Rižoto</a>
+<a href="#sandwich">Sendviči</a>
+<a href="#other">Ostalo</a>
+<a href="#sweetpancakes">Slatke Palačinke</a>
+<a href="#addons">Dodaci</a>
+<a href="#savorypancakes">Slane palačinke</a>
+<a href="#friedpancakes">Pohovane palačinke</a>
+<a href="#waffle">Vafl</a>
+
+</nav>
+
+
+<div class="container">
+
+<h2 id="rostilj">Roštilj</h2>
+<div class="menu" id="rostiljMenu"></div>
+
+<h2 id="pizza">Pizza</h2>
+<div class="menu" id="pizzaMenu"></div>
+
+<h2 id="pasta">Paste</h2>
+<div class="menu" id="pastaMenu"></div>
+
+<h2 id="tortilla">Tortilje</h2>
+<div class="menu" id="tortillaMenu"></div>
+
+<h2 id="risotto">Rižoto</h2>
+<div class="menu" id="risottoMenu"></div>
+
+<h2 id="sandwich">Sendviči</h2>
+<div class="menu" id="sandwichMenu"></div>
+
+<h2 id="other">Ostalo</h2>
+<div class="menu" id="otherMenu"></div>
+
+<h2 id="sweetpancakes">Slatke Palačinke</h2>
+<div class="menu" id="sweetpancakesMenu"></div>
+
+<h2 id="addons">Dodaci</h2>
+<div class="menu" id="addonsMenu"></div>
+
+<h2 id="savorypancakes">Slane palačinke</h2>
+<div class="menu" id="savorypancakesMenu"></div>
+
+<h2 id="friedpancakes">Pohovane palačinke</h2>
+<div class="menu" id="friedpancakesMenu"></div>
+
+<h2 id="waffle">Vafl</h2>
+<div class="menu" id="waffleMenu"></div>
+
+<div class="cart">
+
+<h3>Vaša Porudžbina </h3>
+        <div id="cartItems"></div>
+        <div class="total">Ukupno: <span id="totalVal">0</span> din</div>
+
+        <input id="uName" placeholder="Ime (Name)">
+        <input id="uPhone" placeholder="Telefon (Mobile No)">
+        <input id="uAddress" placeholder="Adresa (Address)">
+
+        <select id="uArea">
+            <option value="">Izaberite deo grada</option>
+            <option value="Zvezdara">Zvezdara</option>
+            <option value="Mirijevo">Mirijevo</option>
+            <option value="Karaburma">Karaburma</option>
+            <option value="Other">Other (Dostava nije moguća)</option>
+        </select>
+
+        <button onclick="sendToWhatsApp()" style="margin-top:20px; background: #25D366; font-weight: bold;">
+            SEND ORDER   
+        </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const rostilj=[
+["Pljeskavica 150 g",390],
+["Pljeskavica 200 g",440],
+["Pljeskavica 300 g",530],
+["Gurmanska pljeskavica 230 g",490],
+["Gurmanska pljeskavica 300 g",560],
+["Cheese pljeskavica 230 g",500],
+["Speedfood pljeskavica 300 g",550],
+["Speedfood pljeskavica 350 g",580],
+["Pileći batak 200 g",500],
+["Pileći file 200 g",470],
+["Punjeni pileći file 250 g",570],
+["Roštiljska kobasica 200 g",470],
+["Ćevapi 200 g",440],
+["Šiš ćevap 150 g",390],
+["Punjeni šiš ćevap 250 g",520],
+["Punjeno belo meso 590 g",590]
+]
+
+const pizza=[
+["Margherita 32 cm",850],
+["Margherita 42 cm",1210],
+["Vesuvio 32 cm",850],
+["Vesuvio 42 cm",1250],
+["Capricciosa 32 cm",880],
+["Capricciosa 42 cm",1290],
+["Prosciutto 32 cm",1030],
+["Prosciutto 42 cm",1420],
+["Speedfood 32 cm",1210],
+["Speedfood 42 cm",1700],
+["Formaggio 32 cm",980],
+["Formaggio 42 cm",1390],
+["Staggione 32 cm",980],
+["Staggione 42 cm",1390],
+["Mexicana 32 cm",1000],
+["Mexicana 42 cm",1450],
+]
+
+const pasta=[
+["Carbonara",700],
+["Bolognese",700],
+["Chicken pesto",750],
+["Chicken curry",750],
+["Speedfood kurkuma",750],
+["Formaggio",750],
+["Pršut",800],
+["Cherry mozzarella",700],
+["Peppenroni",700],
+["Amatriciana",700]
+]
+
+const tortilla=[
+["Piletina povrće",420],
+["Piletina pesto",450],
+["Piletina curry",450]   
+]
+
+const risotto=[
+["Piletina povrće",730],
+["Piletina pesto",730],
+["Piletina curry",730],
+["Kurkuma",730] 
+]
+
+const sandwich=[
+["Piletina",460],
+["Šunka",320],
+["Pecenica",350],
+["Kulen",370],
+["Pršut",460],
+["Caprese",460]
+]
+
+const ostalo=[
+["Lazanje Bolognese",800],
+["Onion rings",300],
+["Nuggets",490],
+["Pomfrit",270],
+["Wedges",300],
+["Pileća bečka",490],
+["Pileća pariska",490],
+["Pileći file u sosu od pečuraka",800],
+["Pileći file u gorgonzola sosu",850]
+]
+
+const sweetpancakes=[
+["Nutella",300],
+["Eurocrem",320],
+["Džem",280],
+["Kinder",410],
+]
+
+const addons=[
+["Višnja",40],
+["Orah",40],
+["Plazma",40],
+["Plazma mleko",50]
+]
+
+const savorypancakes=[
+["Šunka",330],
+["Pečenica",370],
+["Kulen",380],
+["Vrat",380],
+]
+
+const friedpancakes=[
+["Šunka",470],
+["Pečenica",470],
+["Kulen",470],
+["Vrat",470]
+]
+
+const waffle=[
+["Nutella mix",500],
+["Banana mix",550],
+["Ananas mix",550],
+["Šumsko voće mix",550]
+]
+
+function render(menu,id){
+
+menu.forEach(item=>{
+
+document.getElementById(id).innerHTML+=`
+
+<div class="card">
+
+<img src="images/${item[0].replaceAll(" ","").toLowerCase()}.jpeg" width="150">
+
+<div class="card-body">
+
+<h3>${item[0]}</h3>
+
+<div class="price">${item[1]} din</div>
+
+<button onclick="add('${item[0]}',${item[1]})">
+Dodaj
+</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+}
+
+render(rostilj, "rostiljMenu");
+render(pizza, "pizzaMenu");
+render(pasta, "pastaMenu");
+render(tortilla, "tortillaMenu");
+render(risotto, "risottoMenu");
+render(sandwich, "sandwichMenu");
+render(ostalo, "otherMenu");
+render(sweetpancakes, "sweetpancakesMenu");
+render(addons, "addonsMenu"); 
+render(savorypancakes, "savorypancakesMenu");
+render(friedpancakes, "friedpancakesMenu");
+render(waffle, "waffleMenu");
+
+
+let cart = {};
+
+function add(name, price) {
+    if(!cart[name]) cart[name] = {price: price, qty: 1};
+    else cart[name].qty++;
+    update();
+}
+
+function update() {
+    let html = "";
+    let total = 0;
+    for(let i in cart) {
+        html += `<p>${i} x ${cart[i].qty} = ${cart[i].price * cart[i].qty} din</p>`;
+        total += cart[i].price * cart[i].qty;
+    }
+    document.getElementById("cartItems").innerHTML = html;
+    document.getElementById("totalVal").innerText = total;
+}
+
+function sendToWhatsApp() {
+    let n = document.getElementById("uName").value;
+    let p = document.getElementById("uPhone").value;
+    let a = document.getElementById("uAddress").value;
+    let ar = document.getElementById("uArea").value;
+
+    if(!n || !p || !a || !ar) { alert("Please fill all details!"); return; }
+    if(ar === "Other") { alert("Dostava nije moguća u ovaj deo grada!"); return; }
+
+    let items = "";
+    let total = 0;
+    for(let i in cart) {
+        items += `- ${i} (x${cart[i].qty})%0A`;
+        total += cart[i].price * cart[i].qty;
+    }
+
+    let msg = `*New Order*%0A*Name:* ${n}%0A*Phone:* ${p}%0A*Address:* ${a}%0A*Area:* ${ar}%0A%0A*Items:*%0A${items}%0A*Total:* ${total} din`;
+    window.open(`https://wa.me/381641413958?text=${msg}`, "_blank");
+}
+</script>
+</body>
+</html>
